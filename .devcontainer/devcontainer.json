@@ -1,0 +1,34 @@
+{
+	"name": "Attendence Scanner - Core",
+	"image": "mcr.microsoft.com/devcontainers/base:jammy",
+	"features": {
+		"ghcr.io/michidk/devcontainers-features/bun:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"rangav.vscode-thunder-client",
+				"bradlc.vscode-tailwindcss",
+				"Prisma.prisma",
+				"esbenp.prettier-vscode",
+				"eamodio.gitlens",
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"qwtel.sqlite-viewer",
+				"oven.bun-vscode"
+			]
+		}
+	}
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
