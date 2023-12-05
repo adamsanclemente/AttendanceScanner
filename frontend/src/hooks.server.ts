@@ -1,5 +1,7 @@
 import { themes } from '$lib/themes'
 
+// TODO - Add Lucia Hooks
+
 export const handle = async ({ event, resolve }) => {
 	const theme = event.cookies.get('theme')
 

@@ -7,3 +7,66 @@ generator client {
   provider = "prisma-client-js"
 }
 
+////////////////////////////////
+//            Lucia           //
+////////////////////////////////
+
+model User {
+  id           String    @id @unique
+  username     String    @unique
+  firstName    String
+  lastName     String
+  email        String    @unique
+  image        String?
+  auth_session Session[]
+  key          Key[]
+}
+
+model Session {
+  id             String @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model Key {
+  id              String  @id @unique
+  hashed_password String?
+  user_id         String
+  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+////////////////////////////////
+//        Scanner Data        //
+////////////////////////////////
+
+model Class {
+  id       String    @id @unique
+  class_id String
+  students Student[]
+  records  Record[]
+}
+
+model Student {
+  id         String   @id @unique
+  student_id String
+  records    Record[]
+  class      Class    @relation(fields: [class_id], references: [id])
+  class_id   String
+}
+
+model Record {
+  id         String  @id @unique
+  student_id String
+  class_id   String
+  student    Student @relation(references: [id], fields: [student_id], onDelete: Cascade)
+  class      Class   @relation(references: [id], fields: [class_id], onDelete: Cascade)
+  timestamp  BigInt
+  status     String
+  reason     String?
+}
