@@ -45,28 +45,38 @@ model Key {
 //        Scanner Data        //
 ////////////////////////////////
 
+// TODO: Make it so that each class has a teacher. This will be used to determine which classes a teacher can see.
 model Class {
-  id       String    @id @unique
+  id       String    @id @unique @default(uuid())
   class_id String
   students Student[]
   records  Record[]
 }
 
 model Student {
-  id         String   @id @unique
-  student_id String
+  id         String   @id @unique @default(uuid())
+  student_id String   @unique
+  firstName  String
+  lastName   String
   records    Record[]
   class      Class    @relation(fields: [class_id], references: [id])
   class_id   String
 }
 
 model Record {
-  id         String  @id @unique
+  id         String  @id @unique @default(uuid())
   student_id String
   class_id   String
   student    Student @relation(references: [id], fields: [student_id], onDelete: Cascade)
   class      Class   @relation(references: [id], fields: [class_id], onDelete: Cascade)
-  timestamp  BigInt
+  timestamp  DateTime
   status     String
   reason     String?
 }
+
+////////////////////////////////
+//           Config           //
+////////////////////////////////
+
+// TODO: Add config model
+// Make it so that it attaches to the user model

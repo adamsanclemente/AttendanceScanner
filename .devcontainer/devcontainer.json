@@ -15,7 +15,8 @@
 				"eamodio.gitlens",
 				"esbenp.prettier-vscode",
 				"Prisma.prisma",
-				"rangav.vscode-thunder-client"
+				"rangav.vscode-thunder-client",
+				"wayou.vscode-todo-highlight"
 			]
 		}
 	}
