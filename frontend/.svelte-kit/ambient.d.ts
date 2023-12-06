@@ -58,7 +58,6 @@ declare module '$env/static/private' {
 	export const GITHUB_GRAPHQL_URL: string;
 	export const COLOR: string;
 	export const NVM_DIR: string;
-	export const npm_config_metrics_registry: string;
 	export const ContainerVersion: string;
 	export const GITHUB_API_URL: string;
 	export const RepositoryName: string;
@@ -161,7 +160,6 @@ declare module '$env/dynamic/private' {
 		GITHUB_GRAPHQL_URL: string;
 		COLOR: string;
 		NVM_DIR: string;
-		npm_config_metrics_registry: string;
 		ContainerVersion: string;
 		GITHUB_API_URL: string;
 		RepositoryName: string;

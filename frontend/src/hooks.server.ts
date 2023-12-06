@@ -1,13 +1,15 @@
 import { themes } from '$lib/themes'
+import { auth } from "$lib/server/lucia";
+import type { Handle } from "@sveltejs/kit";
 
-// TODO: Add Lucia Hooks
-
-export const handle = async ({ event, resolve }) => {
+export const handle: Handle = async ({ event, resolve }) => {
 	const theme = event.cookies.get('theme')
 
 	if (!theme || !themes.includes(theme)) {
 		return await resolve(event)
 	}
+
+	event.locals.auth = auth.handleRequest(event);
 
 	return await resolve(event, {
 		transformPageChunk: ({ html }) => {

@@ -16,7 +16,8 @@
 				"esbenp.prettier-vscode",
 				"Prisma.prisma",
 				"rangav.vscode-thunder-client",
-				"wayou.vscode-todo-highlight"
+				"wayou.vscode-todo-highlight",
+				"Gruntfuggly.todo-tree"
 			]
 		}
 	}

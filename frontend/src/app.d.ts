@@ -7,7 +7,7 @@ declare global {
 			firstName: string;
 			lastName: string;
 			email: string;
-			image: string | null
+			image?: string;
 		};
 		type DatabaseSessionAttributes = object;
 	}

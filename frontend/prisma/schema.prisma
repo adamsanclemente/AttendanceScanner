@@ -18,6 +18,7 @@ model User {
   lastName     String
   email        String    @unique
   image        String?
+  settings     Settings?
   auth_session Session[]
   key          Key[]
 }
@@ -75,8 +76,11 @@ model Record {
 }
 
 ////////////////////////////////
-//           Config           //
+//          Settings          //
 ////////////////////////////////
 
-// TODO: Add config model
-// Make it so that it attaches to the user model
+model Settings {
+  id         String @id @unique @default(uuid())
+  user_id    String @unique
+  user       User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+}

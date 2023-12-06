@@ -1,3 +1,9 @@
 {
-	"/": []
+	"/": [],
+	"/api/record/submit": [
+		"src/routes/api/record/submit/+server.ts"
+	],
+	"/signup": [
+		"src/routes/signup/+page.server.ts"
+	]
 }
