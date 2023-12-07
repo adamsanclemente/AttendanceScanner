@@ -1,7 +1,12 @@
 {
-	"/": [],
+	"/": [
+		"src/routes/+page.server.ts"
+	],
 	"/api/record/submit": [
 		"src/routes/api/record/submit/+server.ts"
+	],
+	"/profile": [
+		"src/routes/profile/+page.server.ts"
 	],
 	"/signup": [
 		"src/routes/signup/+page.server.ts"

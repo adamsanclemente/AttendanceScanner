@@ -1,7 +1,6 @@
 <script lang="ts">
   import ThemeToggle from "./ThemeToggle.svelte"
 </script>
-
 <div class="navbar bg-base-100 p-4">
   <div class="navbar-start">
     <div class="dropdown">
@@ -34,6 +33,7 @@
           </a>
         </li>
         <li><a>Settings</a></li>
+        <!--TODO: Add logout functionality-->
         <li><a>Logout</a></li>
       </ul>
     </div>

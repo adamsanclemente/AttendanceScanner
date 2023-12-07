@@ -3,7 +3,13 @@ import { auth } from "$lib/server/lucia";
 import { fail, redirect } from "@sveltejs/kit";
 import { PrismaClientValidationError, PrismaClientUnknownRequestError } from "@prisma/client/runtime/library";
 
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
+
+export const load = async ({ locals }: Parameters<PageServerLoad>[0]) => {
+	const session = await locals.auth.validate();
+	if (session) throw redirect(302, '/');
+	return {};
+};
 
 export const actions = {
 	default: async ({ request, locals }: import('./$types').RequestEvent) => {
