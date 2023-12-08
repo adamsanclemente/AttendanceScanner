@@ -5,8 +5,12 @@
 	"/api/record/submit": [
 		"src/routes/api/record/submit/+server.ts"
 	],
-	"/profile": [
-		"src/routes/profile/+page.server.ts"
+	"/app": [],
+	"/app/profile": [
+		"src/routes/app/profile/+page.server.ts"
+	],
+	"/login": [
+		"src/routes/login/+page.server.ts"
 	],
 	"/signup": [
 		"src/routes/signup/+page.server.ts"

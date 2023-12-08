@@ -1,5 +1,6 @@
 <script lang="ts">
   import ThemeToggle from "./ThemeToggle.svelte"
+  import { enhance } from "$app/forms";
 </script>
 <div class="navbar bg-base-100 p-4">
   <div class="navbar-start">
@@ -25,16 +26,20 @@
           <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
         </div>
       </div>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+      <ul tabindex="-1" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <li>
-          <a class="justify-between">
+          <a href="/app/profile" class="justify-between">
             Profile
             <span class="badge">New</span>
           </a>
         </li>
         <li><a>Settings</a></li>
-        <!--TODO: Add logout functionality-->
-        <li><a>Logout</a></li>
+        <!--TODO: Add logout functionality to header-->
+        <li>
+          <form method="post" action="?/logout" use:enhance>
+            <input type="submit" value="Logout" />
+          </form>
+        </li>
       </ul>
     </div>
   </div>

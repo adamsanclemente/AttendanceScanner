@@ -1,12 +1,18 @@
 // @ts-nocheck
+import { redirect, fail } from "@sveltejs/kit";
 import { auth } from "$lib/server/lucia";
-import { fail, redirect } from "@sveltejs/kit";
-
-import type { Actions, PageServerLoad } from "./$types";
+import type { PageServerLoad, Actions } from "./$types";
 
 export const load = async ({ locals }: Parameters<PageServerLoad>[0]) => {
 	const session = await locals.auth.validate();
-    if (!session) throw redirect(302, '/login');
+	if (!session) throw redirect(302, "/login");
+	return {
+		userId: session.user.userId,
+		username: session.user.username,
+        email: session.user.email,
+        firstName: session.user.firstName,
+        lastName: session.user.lastName
+	};
 };
 
 export const actions = {
