@@ -17,7 +17,8 @@
 				"Prisma.prisma",
 				"rangav.vscode-thunder-client",
 				"wayou.vscode-todo-highlight",
-				"Gruntfuggly.todo-tree"
+				"Gruntfuggly.todo-tree",
+				"golang.go"
 			]
 		}
 	}

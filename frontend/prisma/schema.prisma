@@ -65,11 +65,11 @@ model Student {
 }
 
 model Record {
-  id         String  @id @unique @default(uuid())
+  id         String   @id @unique @default(uuid())
   student_id String
   class_id   String
-  student    Student @relation(references: [id], fields: [student_id], onDelete: Cascade)
-  class      Class   @relation(references: [id], fields: [class_id], onDelete: Cascade)
+  student    Student  @relation(references: [id], fields: [student_id], onDelete: Cascade)
+  class      Class    @relation(references: [id], fields: [class_id], onDelete: Cascade)
   timestamp  DateTime
   status     String
   reason     String?
@@ -80,7 +80,7 @@ model Record {
 ////////////////////////////////
 
 model Settings {
-  id         String @id @unique @default(uuid())
-  user_id    String @unique
-  user       User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  id      String @id @unique @default(uuid())
+  user_id String @unique
+  user    User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
 }
