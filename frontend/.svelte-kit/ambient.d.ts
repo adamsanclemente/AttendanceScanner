@@ -58,12 +58,12 @@ declare module '$env/static/private' {
 	export const GITHUB_GRAPHQL_URL: string;
 	export const COLOR: string;
 	export const NVM_DIR: string;
+	export const npm_config_metrics_registry: string;
 	export const ContainerVersion: string;
 	export const GITHUB_API_URL: string;
 	export const RepositoryName: string;
 	export const _: string;
 	export const npm_config_prefix: string;
-	export const npm_config_npm_version: string;
 	export const CLOUDENV_ENVIRONMENT_ID: string;
 	export const PROMPT_DIRTRIM: string;
 	export const TERM: string;
@@ -160,12 +160,12 @@ declare module '$env/dynamic/private' {
 		GITHUB_GRAPHQL_URL: string;
 		COLOR: string;
 		NVM_DIR: string;
+		npm_config_metrics_registry: string;
 		ContainerVersion: string;
 		GITHUB_API_URL: string;
 		RepositoryName: string;
 		_: string;
 		npm_config_prefix: string;
-		npm_config_npm_version: string;
 		CLOUDENV_ENVIRONMENT_ID: string;
 		PROMPT_DIRTRIM: string;
 		TERM: string;

@@ -2,8 +2,8 @@ import type { RequestHandler } from '@sveltejs/kit';
 import pClient from '$lib/server/prisma';
 
 export const POST: RequestHandler = async ({ request }) => {
-    console.log(request.body);
-    const { studentId } = await request.json() as { studentId: string };
+    // Get the student ID from the request body
+    const { studentId } = await request.json();
 
     // Check if Student Exists
     const student = await pClient.student.findUnique({
