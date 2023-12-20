@@ -28,7 +28,7 @@ model Session {
   user_id        String
   active_expires BigInt
   idle_expires   BigInt
-  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([user_id])
 }
@@ -37,7 +37,7 @@ model Key {
   id              String  @id @unique
   hashed_password String?
   user_id         String
-  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([user_id])
 }
@@ -49,9 +49,10 @@ model Key {
 // TODO: Make it so that each class has a teacher. This will be used to determine which classes a teacher can see.
 model Class {
   id       String    @id @unique @default(uuid())
-  class_id String
-  students Student[]
+  class_id String    @unique
+  students Student[] 
   records  Record[]
+  @@index([class_id])
 }
 
 model Student {
@@ -60,19 +61,22 @@ model Student {
   firstName  String
   lastName   String
   records    Record[]
-  class      Class    @relation(fields: [class_id], references: [id])
+  class      Class    @relation(fields: [class_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   class_id   String
+
+  @@index([class_id])
 }
 
 model Record {
   id         String   @id @unique @default(uuid())
   student_id String
   class_id   String
-  student    Student  @relation(references: [id], fields: [student_id], onDelete: Cascade)
-  class      Class    @relation(references: [id], fields: [class_id], onDelete: Cascade)
+  student    Student  @relation(references: [id], fields: [student_id], onDelete: NoAction, onUpdate: Cascade)
+  class      Class    @relation(references: [id], fields: [class_id], onDelete: NoAction, onUpdate: Cascade)
   timestamp  DateTime
   status     String
   reason     String?
+  @@index([student_id])
 }
 
 ////////////////////////////////
@@ -82,5 +86,7 @@ model Record {
 model Settings {
   id      String @id @unique @default(uuid())
   user_id String @unique
-  user    User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user    User   @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([user_id])
 }

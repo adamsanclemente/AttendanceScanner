@@ -4,6 +4,7 @@ import pClient from '$lib/server/prisma';
 export const POST: RequestHandler = async ({ request }) => {
     // Get the student ID from the request body
     const { studentId } = await request.json();
+    console.log(studentId);
 
     // Check if Student Exists
     const student = await pClient.student.findUnique({
@@ -15,6 +16,8 @@ export const POST: RequestHandler = async ({ request }) => {
     if (!student) {
         return new Response(JSON.stringify({ error: 'Student does not exist' }), { status: 400 });
     }
+
+    console.log(student.class_id)
 
     // TODO: Make this a config variable
     // If it is between 7:00AM and 7:30AM EST (11:00AM and 11:30AM UTC), create a new record with status 'P', otherwise create a new record with status 'T'
