@@ -34,12 +34,11 @@
           </a>
         </li>
         <li><a>Settings</a></li>
-        <!--TODO: Add logout functionality to header-->
-        <li>
-          <form method="post" action="?/logout" use:enhance>
-            <input type="submit" value="Logout" />
-          </form>
-        </li>
+          <form method="POST" action="/login?/logout">
+            <li>
+                    <button type="submit">Logout</button>
+            </li>
+        </form>
       </ul>
     </div>
   </div>

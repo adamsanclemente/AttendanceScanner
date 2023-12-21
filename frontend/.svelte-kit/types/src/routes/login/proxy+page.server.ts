@@ -6,7 +6,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 export const actions = {
-	default: async ({ request, locals }: import('./$types').RequestEvent) => {
+	login: async ({ request, locals }: import('./$types').RequestEvent) => {
 		const formData = await request.formData();
 		const username = formData.get("username");
 		const password = formData.get("password");
@@ -61,5 +61,12 @@ export const actions = {
 		// redirect to
 		// make sure you don't throw inside a try/catch block!
 		throw redirect(302, "/app");
+	},
+	logout: async ({ locals }: import('./$types').RequestEvent) => {
+		const session = await locals.auth.validate();
+		if (!session) return fail(401);
+		await auth.invalidateSession(session.sessionId); // invalidate session
+		locals.auth.setSession(null); // remove cookie
+		throw redirect(302, "/login"); // redirect to login page
 	}
 };;null as any as Actions;

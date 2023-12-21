@@ -10,7 +10,7 @@
                 <p class="text-base-content mt-2">Log in to your account.</p>
             </div>
             <div class="m-7">
-                <form method="post" use:enhance>
+                <form method="post" action="?/login" use:enhance>
                     <div class="mb-6">
                         <label for="username" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Username</label>
                         <input type="text" name="username" id="username" placeholder="Your username" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-100 focus:border-indigo-300" />
