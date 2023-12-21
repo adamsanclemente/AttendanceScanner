@@ -12,13 +12,14 @@ generator client {
 ////////////////////////////////
 
 model User {
-  id           String    @id @unique
-  username     String    @unique
+  id           String        @id @unique
+  username     String        @unique
   firstName    String
   lastName     String
-  email        String    @unique
+  email        String        @unique
   image        String?
   settings     Settings?
+  classes      ClassOnUser[]
   auth_session Session[]
   key          Key[]
 }
@@ -46,20 +47,32 @@ model Key {
 //        Scanner Data        //
 ////////////////////////////////
 
-// TODO: Make it so that each class has a teacher. This will be used to determine which classes a teacher can see.
 model Class {
-  id       String    @id @unique @default(uuid())
-  class_id String    @unique
-  students Student[] 
+  id       String        @id @unique @default(uuid())
+  class_id String        @unique
+  students Student[]
+  teacher  ClassOnUser[]
+
   @@index([class_id])
 }
 
+model ClassOnUser {
+  id       String @id @unique @default(uuid())
+  class_id String
+  user_id  String
+  class    Class  @relation(references: [id], fields: [class_id], onDelete: Cascade, onUpdate: Cascade)
+  user     User   @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([class_id])
+  @@index([user_id])
+}
+
 model Student {
-  id         String   @id @unique @default(uuid())
-  student_id String   @unique
+  id         String @id @unique @default(uuid())
+  student_id String @unique
   firstName  String
   lastName   String
-  class      Class    @relation(fields: [class_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  class      Class  @relation(fields: [class_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   class_id   String
 
   @@index([class_id])
@@ -72,6 +85,7 @@ model Record {
   timestamp  DateTime
   status     String
   reason     String?
+
   @@index([student_id])
 }
 
