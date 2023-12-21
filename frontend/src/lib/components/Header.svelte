@@ -1,6 +1,5 @@
 <script lang="ts">
   import ThemeToggle from "./ThemeToggle.svelte"
-  import { enhance } from "$app/forms";
 </script>
 <div class="navbar bg-base-100 p-4">
   <div class="navbar-start">
@@ -8,10 +7,10 @@
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
       </div>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a>Homepage</a></li>
-        <li><a>Portfolio</a></li>
-        <li><a>About</a></li>
+      <ul tabindex="-1" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+        <li><a href="/app">Home</a></li>
+        <li><a href="/app/classes">Classes</a></li>
+        <li><a href="/app/stats">Stats</a></li>
       </ul>
     </div>
   </div>
@@ -28,12 +27,9 @@
       </div>
       <ul tabindex="-1" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <li>
-          <a href="/app/profile" class="justify-between">
-            Profile
-            <span class="badge">New</span>
-          </a>
+          <a href="/profile" class="justify-between">Profile</a>
         </li>
-        <li><a>Settings</a></li>
+        <li><a href="/profile/settings">Settings</a></li>
           <form method="POST" action="/login?/logout">
             <li>
                     <button type="submit">Logout</button>
