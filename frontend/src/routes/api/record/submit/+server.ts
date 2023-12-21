@@ -37,6 +37,20 @@ export const POST: RequestHandler = async ({ request }) => {
         return new Response(JSON.stringify({ error: 'Student has an invalid class' }), { status: 400 });
     }
 
+    // Check if the student has already submitted a record for today
+    const existingRecord = await pClient.record.findFirst({
+        where: {
+            student_id: studentId,
+            timestamp: {
+                gte: new Date().toISOString().split('T')[0] + 'T00:00:00.000Z',
+            }
+        }
+    });
+
+    if (existingRecord) {
+        return new Response(JSON.stringify({ error: 'Student has already submitted a record today' }), { status: 400 });
+    }
+
     // Create a new record
     const newRecord = await pClient.record.create({
         data: {
