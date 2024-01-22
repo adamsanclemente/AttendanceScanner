@@ -44,7 +44,7 @@
 
 	<!-- Edit Information Card -->
 <section class="card col-span-2 bg-base-200 xl:col-span-1 justify-center">
-	<form class="card-body" method="POST" action="?/updatePersonal" use:enhance>
+	<form class="card-body" method="POST" action="?/updateSecurity" use:enhance>
 
 		<h2 class="card-title">Account Information</h2>
 
@@ -88,9 +88,9 @@
 				type="password"
 				class="input input-bordered font-mono"
 				title="New Password"
-				required
 			/>
 		</div>
+		<input type="hidden" name="id" value={data.userId} required />
 		<div class="form-control">
 			<div class="flex items-end py-4">
 				<button class="btn btn-primary grow">Update Account Information</button>

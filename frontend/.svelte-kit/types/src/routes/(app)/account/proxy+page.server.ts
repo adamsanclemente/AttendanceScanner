@@ -61,4 +61,73 @@ export const actions = {
 			},
 		};
 	},
+	updateSecurity: async ({ request, locals }: import('./$types').RequestEvent) => {
+		// Form Data
+		const formData = await request.formData();
+		const password = formData.get("password") as string;
+		const email = formData.get("email") as string;
+		const username = formData.get("username") as string;
+		const id = formData.get("id") as string;
+
+		// Update email and username
+
+		await pClient.user.update({
+			where: { id },
+			data: {
+				email,
+				username,
+			},
+		});
+
+		// Check if password is empty
+		if (password === "") {
+			return {
+				status: 200,
+				body: {
+					message: "Profile updated successfully",
+				},
+			};
+		
+		};
+
+		// Check if password is strong enough
+		const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+		if (!passwordRegex.test(password)) {
+			return {
+				status: 400,
+				body: {
+					message: "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter and one number",
+				},
+			};
+		};
+
+		// Update password
+		auth.updateKeyPassword(
+			'username',
+			username,
+			password
+		)
+
+		// Invalidate all sessions
+		await auth.invalidateAllUserSessions(id);
+
+		// Create new session
+		const newSession = await auth.createSession({
+			userId: id,
+			attributes: {}
+		});
+		locals.auth.setSession(newSession);
+
+		// Return success
+
+		return {
+			status: 200,
+			body: {
+				message: "Profile updated successfully",
+			},
+		};
+
+
+	}
 };;null as any as Actions;
