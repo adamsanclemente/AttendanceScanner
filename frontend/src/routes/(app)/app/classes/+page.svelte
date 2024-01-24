@@ -10,7 +10,7 @@
 		<div class="flex justify-evenly  pl-4 py-4">
             <div class="flex flex-row">
                 <div class="avatar placeholder">
-                    <div class="bg-neutral text-neutral-content rounded-full w-24">
+                    <div class="bg-blue-950 text-neutral-content rounded-full w-24">
                         <span class="text-3xl">{c.class.class_id}</span>
                     </div>
                 </div>
@@ -32,6 +32,9 @@
                     <span class="text-md font-bold ml-4">Students:</span>
 				<span class="text-sm font-thin ml-4">{c.class.students.length}</span>
 				</div>
+				<button class="btn btn-primary ml-4 mt-4" on:click={() => {
+					window.location.href = `/app/class/${c.class.class_id}`;
+				}}>View Class</button>
 			</div>
 		</div>
 	</div>

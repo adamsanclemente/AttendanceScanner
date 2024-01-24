@@ -33,9 +33,6 @@ export const load: PageServerLoad = async ({ locals }) => {
     // Check if user exists
     if (!user) throw redirect(302, "/login");
 
-    console.log(user);
-
-
     // Return user data with classes
     return {
         props: {
