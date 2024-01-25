@@ -1,4 +1,4 @@
-import type { LayoutServerLoad } from '../app/$types';
+import type { LayoutServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ locals }) => {
@@ -8,9 +8,10 @@ export const load = (async ({ locals }) => {
         return redirect(300, '/login');
     }
 
-    const user = await session.user;
-
-    return {
-        user,
+    // Check if user is admin
+    if (!session.user.admin) {
+        return redirect(300, '/app');
     }
-}) as LayoutServerLoad;
+
+    return {};
+}) satisfies LayoutServerLoad;

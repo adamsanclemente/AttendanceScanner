@@ -8,6 +8,7 @@ declare global {
 			lastName: string;
 			email: string;
 			image?: string;
+			admin: boolean;
 		};
 		type DatabaseSessionAttributes = object;
 	}

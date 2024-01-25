@@ -19,6 +19,7 @@ model User {
   email        String        @unique
   image        String?
   settings     Settings?
+  admin        Boolean       @default(false)
   classes      ClassOnUser[]
   auth_session Session[]
   key          Key[]

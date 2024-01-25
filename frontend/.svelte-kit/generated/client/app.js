@@ -10,19 +10,22 @@ export const nodes = [
 	() => import('./nodes/6'),
 	() => import('./nodes/7'),
 	() => import('./nodes/8'),
-	() => import('./nodes/9')
+	() => import('./nodes/9'),
+	() => import('./nodes/10'),
+	() => import('./nodes/11')
 ];
 
-export const server_loads = [2];
+export const server_loads = [2,3];
 
 export const dictionary = {
-		"/": [~3],
-		"/(app)/account": [~4,[2]],
-		"/(app)/app": [5,[2]],
-		"/(app)/app/classes": [~7,[2]],
-		"/(app)/app/class/[classid]": [~6,[2]],
-		"/login": [~8],
-		"/signup": [~9]
+		"/": [~4],
+		"/(app)/account": [~5,[2]],
+		"/(app)/app": [6,[2]],
+		"/(app)/app/admin": [~7,[2,3]],
+		"/(app)/app/classes": [~9,[2]],
+		"/(app)/app/class/[classid]": [~8,[2]],
+		"/login": [~10],
+		"/signup": [~11]
 	};
 
 export const hooks = {

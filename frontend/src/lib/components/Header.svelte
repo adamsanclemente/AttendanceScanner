@@ -1,5 +1,7 @@
 <script lang="ts">
+	import type { User } from "lucia";
   import ThemeToggle from "./ThemeToggle.svelte"
+  export let user: User
 </script>
 <div class="navbar bg-base-100 p-4">
   <div class="navbar-start">
@@ -11,6 +13,9 @@
         <li><a href="/app">Home</a></li>
         <li><a href="/app/classes">Classes</a></li>
         <li><a href="/app/stats">Stats</a></li>
+        {#if user.admin === true}
+          <li><a href="/app/admin">Admin</a></li>
+        {/if}
       </ul>
     </div>
   </div>

@@ -15,6 +15,13 @@
 	"/(app)/app": [
 		"src/routes/(app)/+layout.server.ts"
 	],
+	"/(app)/app/admin": [
+		"src/routes/(app)/app/admin/+page.server.ts",
+		"src/routes/(app)/app/admin/+layout.server.ts",
+		"src/routes/(app)/+layout.server.ts",
+		"src/routes/(app)/app/admin/+layout.server.ts",
+		"src/routes/(app)/+layout.server.ts"
+	],
 	"/(app)/app/classes": [
 		"src/routes/(app)/app/classes/+page.server.ts",
 		"src/routes/(app)/+layout.server.ts"
