@@ -21,7 +21,7 @@ export const load = (async () => {
     });
 
     // Get all users
-    const users = await pClient.user.findMany();
+    const users = await pClient.user.findMany({ include: { classes: true }});
     return {
         props: {
             classes,
