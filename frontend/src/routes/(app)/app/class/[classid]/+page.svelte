@@ -45,7 +45,7 @@
 		<div class="bg-base-200 p-5 rounded-md m-8 col-span-7 max-h-96">
 			<h1 class="text-left ml-2 font-medium text-xl">Students</h1>
 			<div class="divider"></div>
-			<div class="overflow-y-scroll h-96">
+			<div class="overflow-y-scroll">
 				{#each data.props.classData.students as s}
 					<div class="flex flex-row justify-between items-center">
 						<div class="flex flex-row items-center">
@@ -59,7 +59,11 @@
 
 							<div class="flex flex-col py-4">
 								<span class="text-2xl font-bold ml-4">{s.firstName} {s.lastName}</span>
-								<span class="text-md font-thin ml-4">{s.email}</span>
+								{#if s.email}
+									<span class="text-md font-thin ml-4">{s.email}</span>
+								{:else}
+									<span class="text-md font-thin ml-4">No Email</span>
+								{/if}
 							</div>
 						</div>
 						<button
@@ -82,32 +86,34 @@
 			<h1 class="text-left ml-2 font-medium text-xl">Actions</h1>
 			<div class="divider"></div>
 			<div class="flex flex-row justify-evenly">
-				<button
-					class="btn btn-success ml-4 mt-4"
-					on:click={() => {
-						window.location.href = `/app/class/${data.props.classData.class_id}/add-student`;
-					}}>Add Student</button
-				>
-				<button
-					class="btn btn-success btn-outline ml-4 mt-4"
-					on:click={() => {
-						window.location.href = `/app/class/${data.props.classData.class_id}/add-teacher`;
-					}}>Add Teacher</button
-				>
-				<!-- Edit Records -->
-				<button
-					class="btn btn-warning ml-4 mt-4"
-					on:click={() => {
-						window.location.href = `/app/class/${data.props.classData.class_id}/edit`;
-					}}>Edit Class</button
-				>
-				<!-- Edit Attendence -->
-				<button
-					class="btn btn-warning btn-outline ml-4 mt-4"
-					on:click={() => {
-						window.location.href = `/app/class/${data.props.classData.class_id}/edit-attendence`;
-					}}>Edit Attendence</button
-				>
+				{#if data.props.classData}
+					<button
+						class="btn btn-success ml-4 mt-4"
+						on:click={() => {
+							window.location.href = `/app/class/${data.props.classData.class_id}/add-student`;
+						}}>Add Student</button
+					>
+					<button
+						class="btn btn-success btn-outline ml-4 mt-4"
+						on:click={() => {
+							window.location.href = `/app/class/${data.props.classData.class_id}/add-teacher`;
+						}}>Add Teacher</button
+					>
+					<!-- Edit Records -->
+					<button
+						class="btn btn-warning ml-4 mt-4"
+						on:click={() => {
+							window.location.href = `/app/class/${data.props.classData.class_id}/edit`;
+						}}>Edit Class</button
+					>
+					<!-- Edit Attendence -->
+					<button
+						class="btn btn-warning btn-outline ml-4 mt-4"
+						on:click={() => {
+							window.location.href = `/app/class/${data.props.classData.class_id}/edit-attendence`;
+						}}>Edit Attendence</button
+					>
+				{/if}
 			</div>
 		</div>
 	</div>
