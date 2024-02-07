@@ -42,18 +42,14 @@
 			<div class="flex flex-row justify-evenly">
 				{#if data.props.studentData}
 					<!-- Edit Records -->
-					<button
+					<a
 						class="btn btn-warning ml-4 mt-4"
-					on:click={() => {
-							window.location.href = `/app/student/${data.props.studentData.student_id}/records/edit`;
-						}}>Edit Records</button
+					href="/app/student/{data.props.studentData.student_id}/records/edit">Edit Records</a
 					>
 					<!-- Edit Attendence -->
-					<button
+					<a
 						class="btn btn-warning btn-outline ml-4 mt-4"
-						on:click={() => {
-							window.location.href = `/app/class/${data.props.studentData.student_id}attendence/edit`;
-						}}>Edit Attendence</button
+						href="/app/students/{data.props.studentData.student_id}/attendence/edit">Edit Attendence</a
 					>
 				{/if}
 			</div>
