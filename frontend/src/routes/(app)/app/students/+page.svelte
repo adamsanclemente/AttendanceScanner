@@ -34,7 +34,7 @@
 						</div>
 					</div>
 				</div>
-                <a class="btn btn-warning mx-4 mt-4" href="/app/student/${student.student_id}">View Student</a>
+                <a class="btn btn-warning mx-4 mt-4" href="/app/student/{student.student_id}">View Student</a>
 			</div>
 		</div>
 	{/each}
