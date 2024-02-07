@@ -12,6 +12,7 @@
       <ul tabindex="-1" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
         <li><a href="/app">Home</a></li>
         <li><a href="/app/classes">Classes</a></li>
+        <li><a href="/app/students">Students</a></li>
         <li><a href="/app/stats">Stats</a></li>
         {#if user.admin === true}
           <li><a href="/app/admin">Admin</a></li>
