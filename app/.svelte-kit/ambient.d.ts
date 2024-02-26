@@ -27,6 +27,7 @@
  */
 declare module '$env/static/private' {
 	export const DATABASE_URL: string;
+	export const SUPABASE_AUTH_EXTERNAL_AZURE_SECRET: string;
 	export const ACSetupSvcPort: string;
 	export const ACSvcPort: string;
 	export const ALLUSERSPROFILE: string;
@@ -153,6 +154,7 @@ declare module '$env/static/public' {
 declare module '$env/dynamic/private' {
 	export const env: {
 		DATABASE_URL: string;
+		SUPABASE_AUTH_EXTERNAL_AZURE_SECRET: string;
 		ACSetupSvcPort: string;
 		ACSvcPort: string;
 		ALLUSERSPROFILE: string;
