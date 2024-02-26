@@ -1,0 +1,58 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+}
+
+model Profile {
+  id        String           @id @db.Uuid
+  firstName String
+  lastName  String
+  email     String
+  image     String
+  classes   ClassOnProfile[]
+  
+}
+
+model Class {
+  id          String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  description String?
+  image       String?
+  teachers    ClassOnProfile[]
+  students    Student[]
+}
+
+model ClassOnProfile {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  profileId String   @db.Uuid
+  class     Class    @relation(fields: [classId], references: [id])
+  classId   String   @db.Uuid
+  role      String
+  createdAt DateTime @default(dbgenerated("now()"))
+}
+
+model Student {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName String
+  lastName  String
+  email     String
+  schoolId  String
+  class     Class    @relation(fields: [classId], references: [id])
+  classId   String   @db.Uuid
+  records   Record[]
+  createdAt DateTime @default(dbgenerated("now()"))
+}
+
+model Record {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId String   @db.Uuid
+  status    String
+  reason    String?
+  timestamp DateTime @default(dbgenerated("now()"))
+}
