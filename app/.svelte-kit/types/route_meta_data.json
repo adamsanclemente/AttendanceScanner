@@ -1,4 +1,9 @@
 {
+	"/(app)": [
+		"src/routes/(app)/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
 	"/": [
 		"src/routes/+page.server.ts",
 		"src/routes/+layout.ts",
@@ -9,11 +14,18 @@
 	"/(auth)/auth/callback": [
 		"src/routes/(auth)/auth/callback/+server.ts"
 	],
-	"/(auth)/auth/login": [
+	"/(app)/dashboard": [
+		"src/routes/(app)/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/(auth)/login": [
+		"src/routes/(auth)/login/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	],
 	"/(app)/test": [
+		"src/routes/(app)/+layout.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	]

@@ -1,4 +1,6 @@
-<script lang="typescript">
+<script lang="ts">
+	import { redirect } from '@sveltejs/kit';
+
     export let data;
     let { supabase } = data;
     $: ({ supabase } = data);
@@ -15,6 +17,7 @@
 
     async function signOut() {
         await supabase.auth.signOut();
+        throw redirect(302, '/login');
     }
 </script>
 

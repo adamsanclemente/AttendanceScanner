@@ -2,6 +2,9 @@
 	import { Button } from "$lib/components/ui/button";
 	import UserAuthForm from "./user-auth-form.svelte";
 	import { text } from "@sveltejs/kit";
+	export let data;
+    let { supabase } = data;
+    $: ({ supabase } = data);
 </script>
 
 <div
@@ -37,7 +40,7 @@
 					Sign in with Microsoft
 				</p>
 			</div>
-			<UserAuthForm />
+			<UserAuthForm supabase={supabase}/>
 			<p class="px-8 text-center text-sm text-muted-foreground">
 				By clicking continue, you agree to our{" "}
 				<a href="/terms" class="underline underline-offset-4 hover:text-primary">
