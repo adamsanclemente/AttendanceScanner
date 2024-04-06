@@ -24,6 +24,11 @@
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	],
+	"/(auth)/signup": [
+		"src/routes/(auth)/signup/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
 	"/(app)/test": [
 		"src/routes/(app)/+layout.server.ts",
 		"src/routes/+layout.ts",

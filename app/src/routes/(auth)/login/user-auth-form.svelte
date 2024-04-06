@@ -28,11 +28,12 @@
 			}
 		});
 	}
+
 </script>
 
 <div class={cn("grid gap-6", className)} {...$$restProps}>
 	<Button variant="outline" type="button" disabled={isLoading} on:click={signInWithAzure}>
 		{" "}
-		Microsoft
+		Log In With Microsoft
 	</Button>
 </div>
