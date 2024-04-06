@@ -19,7 +19,7 @@
 				<h1 class="text-2xl font-semibold tracking-tight">Welcome Back</h1>
 				<p class="text-sm text-muted-foreground">Log In Below</p>
 			</div>
-			<form action="?/signUp" method="POST">
+			<form action="?/logIn" method="POST">
 				<div class="flex flex-col space-y-4">
 					<div class="flex flex-col space-y-1">
 						<Label for="email">Email</Label>
