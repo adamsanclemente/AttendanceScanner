@@ -201,18 +201,9 @@ while True:
         elif user_input == 'show_ip':
             handle_ip_display()
         elif user_input == 'X0034LPXZP':
-            # Make screen do a cool animation
-            lcd.clear()
-            lcd.display()
-            time.sleep(1)
-            lcd.clear()
-            lcd.display()
-            time.sleep(1)
-            lcd.clear()
-            lcd.display()
             
             # Display the student's name
-            student_name = "John Doe"
+            student_name = "Balls"
             text_bbox = draw.textbbox((0, 0), student_name, font=font)
             text_width, text_height = text_bbox[2], text_bbox[3]
             x = (lcd.width - text_height) // 2
