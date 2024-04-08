@@ -74,7 +74,7 @@ def handle_wifi_input():
     wifi_password = input("Enter WiFi Password: ")
     
     # Connect to the WiFi network
-    subprocess.call("sudo nmcli device wifi connect {wifi_ssid} password {wifi_password}", shell=True)
+    subprocess.call(f"sudo nmcli device wifi connect {wifi_ssid} password {wifi_password}", shell=True)
     
 # IP Display Handler
 def handle_ip_display():
