@@ -201,6 +201,8 @@ while True:
         elif user_input == 'show_ip':
             handle_ip_display()
         elif user_input == 'X0034LPXZP':
+            # Clear the display
+            lcd.clear()
             
             # Display the student's name
             student_name = "Balls"
