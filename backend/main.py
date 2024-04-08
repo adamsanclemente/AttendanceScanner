@@ -74,7 +74,7 @@ def handle_wifi_input():
     wifi_password = input("Enter WiFi Password: ")
     
     # Connect to the WiFi network
-    subprocess.call(f"nmcli device wifi connect {wifi_ssid} password {wifi_password}", shell=True)
+    subprocess.call("sudo nmcli device wifi connect {wifi_ssid} password {wifi_password}", shell=True)
     
 # IP Display Handler
 def handle_ip_display():
@@ -156,7 +156,7 @@ while True:
     else:
         # Display error message
         error_message = "No WiFi Connection\nCheck your network settings"
-        text_bbox = draw.textbbox((0, 0), error_message, font=font)
+        text_bbox = draw.textbbox((0, 0), error_message, font=smfont)
         text_width, text_height = text_bbox[2], text_bbox[3]
 
         x = 10
@@ -165,7 +165,7 @@ while True:
         # Rotate the text and draw it centered
         text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
         text_draw = ImageDraw.Draw(text_image)
-        text_draw.text((0, 0), error_message, font=font, fill="WHITE")
+        text_draw.text((0, 0), error_message, font=smfont, fill="WHITE")
         rotated = text_image.rotate(90, expand=1)
         image.paste(rotated, (x, y))
     
