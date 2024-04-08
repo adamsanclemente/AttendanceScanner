@@ -200,6 +200,32 @@ while True:
             subprocess.call("sudo reboot", shell=True)
         elif user_input == 'show_ip':
             handle_ip_display()
+        elif user_input == 'X0034LPXZP':
+            # Make screen do a cool animation
+            lcd.clear()
+            lcd.display()
+            time.sleep(1)
+            lcd.clear()
+            lcd.display()
+            time.sleep(1)
+            lcd.clear()
+            lcd.display()
+            
+            # Display the student's name
+            student_name = "John Doe"
+            text_bbox = draw.textbbox((0, 0), student_name, font=font)
+            text_width, text_height = text_bbox[2], text_bbox[3]
+            x = (lcd.width - text_height) // 2
+            y = (lcd.height - text_width) // 2
+            text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
+            text_draw = ImageDraw.Draw(text_image)
+            text_draw.text((0, 0), student_name, font=font, fill="WHITE")
+            rotated = text_image.rotate(90, expand=1)
+            image.paste(rotated, (x, y))
+            lcd.ShowImage(image)
+            
+            # Wait for 5 seconds
+            time.sleep(5)
             
         user_input = None
 
