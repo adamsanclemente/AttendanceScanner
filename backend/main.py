@@ -220,6 +220,68 @@ while True:
             # Wait for 5 seconds
             time.sleep(5)
             
+        # Handle Student ID Inputs
+        else:
+            # Make a request to the server
+            response = requests.post("https://attendance.adamsc.xyz/api/attendance", json={"student_id": user_input, "api_key": "123"})
+            
+            # Check if the request was successful
+            if response.status_code == 200:
+                # Clear the display
+                lcd.clear()
+                
+                # Check type of response
+                if response.json()["status"] == "error":
+                    # Display an error message
+                    error_message = response.json()["message"]
+                    text_bbox = draw.textbbox((0, 0), error_message, font=font)
+                    text_width, text_height = text_bbox[2], text_bbox[3]
+                    x = 10
+                    y = (lcd.height - text_width) // 2
+                    text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
+                    text_draw = ImageDraw.Draw(text_image)
+                    text_draw.text((0, 0), error_message, font=font, fill="WHITE")
+                    rotated = text_image.rotate(90, expand=1)
+                    image.paste(rotated, (x, y))
+                    lcd.ShowImage(image)
+                    
+                    # Wait for 5 seconds
+                    time.sleep(5)
+                    continue
+                
+                # Display the student's name
+                student_name = response.json()["student_name"]
+                text_bbox = draw.textbbox((0, 0), student_name, font=font)
+                text_width, text_height = text_bbox[2], text_bbox[3]
+                x = (lcd.width - text_height) // 2
+                y = (lcd.height - text_width) // 2
+                text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
+                text_draw = ImageDraw.Draw(text_image)
+                text_draw.text((0, 0), student_name, font=font, fill="WHITE")
+                rotated = text_image.rotate(90, expand=1)
+                image.paste(rotated, (x, y))
+                lcd.ShowImage(image)
+                
+                # Wait for 5 seconds
+                time.sleep(5)
+            else:
+                # Display an error message
+                error_message = "An error occurred\nPlease try again later"
+                text_bbox = draw.textbbox((0, 0), error_message, font=font)
+                text_width, text_height = text_bbox[2], text_bbox[3]
+                x = 10
+                y = (lcd.height - text_width) // 2
+                text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
+                text_draw = ImageDraw.Draw(text_image)
+                text_draw.text((0, 0), error_message, font=font, fill="WHITE")
+                rotated = text_image.rotate(90, expand=1)
+                image.paste(rotated, (x, y))
+                lcd.ShowImage(image)
+                
+                # Wait for 5 seconds
+                time.sleep(5)
+           
+            
         user_input = None
 
         # Start a new input thread
