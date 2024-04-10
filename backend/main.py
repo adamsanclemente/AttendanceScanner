@@ -32,6 +32,42 @@ font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 
 smfont = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 16)
 
+# Function to print messages on the screen
+def print_message(message, position, duration=5, font=font):
+    image = Image.new("RGB", (lcd.width, lcd.height), "BLACK")
+    draw = ImageDraw.Draw(image)
+    text = message
+    text_bbox = draw.textbbox((0, 0), text, font=font)
+    text_width, text_height = text_bbox[2], text_bbox[3]
+    
+    if position == "center":
+        x = (lcd.width - text_height) // 2
+        y = (lcd.height - text_width) // 2
+    elif position == "top":
+        x = 10
+        y = text_width // 2
+    elif position == "bottom":
+        x = 40
+        y = lcd.height - text_width // 2
+    else:
+        x = (lcd.width - text_height) // 2
+        y = (lcd.height - text_width) // 2
+        
+    text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
+    text_draw = ImageDraw.Draw(text_image)
+    text_draw.text((0, 0), text, font=font, fill="WHITE")
+    rotated = text_image.rotate(90, expand=1)
+    image.paste(rotated, (x, y))
+    lcd.ShowImage(image)
+    
+    # Wait, then clear the display
+    time.sleep(duration)
+    
+    # If duration is 0, don't clear the display
+    if duration != 0:
+        lcd.clear()
+    
+
 # Default Command Handler
 def handle_input():
     global user_input
@@ -42,35 +78,11 @@ def handle_wifi_input():
     global wifi_ssid
     global wifi_password
     # Display prompt on the LCD
-    image = Image.new("RGB", (lcd.width, lcd.height), "BLACK")
-    draw = ImageDraw.Draw(image)
-    prompt = "Enter WiFi SSID:"
-    text_bbox = draw.textbbox((0, 0), prompt, font=font)
-    text_width, text_height = text_bbox[2], text_bbox[3]
-    x = 10
-    y = (lcd.height - text_width) // 2
-    text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-    text_draw = ImageDraw.Draw(text_image)
-    text_draw.text((0, 0), prompt, font=font, fill="WHITE")
-    rotated = text_image.rotate(90, expand=1)
-    image.paste(rotated, (x, y))
-    lcd.ShowImage(image)
+    print_message("Enter WiFi SSID:", "center", duration=0, font=font)
     wifi_ssid = input("Enter WiFi SSID: ")
     
-    #Display prompt on the LCD
-    image = Image.new("RGB", (lcd.width, lcd.height), "BLACK")
-    draw = ImageDraw.Draw(image)
-    prompt = "Enter WiFi Password:"
-    text_bbox = draw.textbbox((0, 0), prompt, font=font)
-    text_width, text_height = text_bbox[2], text_bbox[3]
-    x = 10
-    y = (lcd.height - text_width) // 2
-    text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-    text_draw = ImageDraw.Draw(text_image)
-    text_draw.text((0, 0), prompt, font=font, fill="WHITE")
-    rotated = text_image.rotate(90, expand=1)
-    image.paste(rotated, (x, y))
-    lcd.ShowImage(image)
+    # Display prompt on the LCD
+    print_message("Enter WiFi Password:", "center", duration=0, font=font)
     wifi_password = input("Enter WiFi Password: ")
     
     # Connect to the WiFi network
@@ -82,27 +94,7 @@ def handle_ip_display():
     ip_address = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True).decode("utf-8").strip()
     
     # Display the IP address on the LCD
-    image = Image.new("RGB", (lcd.width, lcd.height), "BLACK")
-    draw = ImageDraw.Draw(image)
-    text = f"IP Address: {ip_address}"
-    text_bbox = draw.textbbox((0, 0), text, font=smfont)
-    text_width, text_height = text_bbox[2], text_bbox[3]
-    x = (lcd.width - text_height) // 2
-    y = (lcd.height - text_width) // 2
-    text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-    text_draw = ImageDraw.Draw(text_image)
-    text_draw.text((0, 0), text, font=smfont, fill="WHITE")
-    rotated = text_image.rotate(90, expand=1)
-    image.paste(rotated, (x, y))
-    lcd.ShowImage(image)
-    
-    # Wait for 10 seconds
-    time.sleep(10)
-    
-    # Clear the display
-    lcd.clear()
-
-# Begin the input thread
+    print_message(f"IP Address: {ip_address}", "center", duration=10, font=smfont)
 input_thread = threading.Thread(target=handle_input)
 input_thread.start()
 
@@ -206,20 +198,8 @@ while True:
             
             # Display the student's name
             student_name = "Balls"
-            text_bbox = draw.textbbox((0, 0), student_name, font=font)
-            text_width, text_height = text_bbox[2], text_bbox[3]
-            x = (lcd.width - text_height) // 2
-            y = (lcd.height - text_width) // 2
-            text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-            text_draw = ImageDraw.Draw(text_image)
-            text_draw.text((0, 0), student_name, font=font, fill="WHITE")
-            rotated = text_image.rotate(90, expand=1)
-            image.paste(rotated, (x, y))
-            lcd.ShowImage(image)
-            
-            # Wait for 5 seconds
-            time.sleep(5)
-            
+            print_message(student_name, "center", duration=5, font=font)
+
         # Handle Student ID Inputs
         else:
             # Make a request to the server
@@ -234,54 +214,17 @@ while True:
                 if response.json()["status"] == "error":
                     # Display an error message
                     error_message = response.json()["message"]
-                    text_bbox = draw.textbbox((0, 0), error_message, font=font)
-                    text_width, text_height = text_bbox[2], text_bbox[3]
-                    x = 10
-                    y = (lcd.height - text_width) // 2
-                    text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-                    text_draw = ImageDraw.Draw(text_image)
-                    text_draw.text((0, 0), error_message, font=font, fill="WHITE")
-                    rotated = text_image.rotate(90, expand=1)
-                    image.paste(rotated, (x, y))
-                    lcd.ShowImage(image)
-                    
-                    # Wait for 5 seconds
-                    time.sleep(5)
+                    print_message(error_message, "center", duration=5, font=font)
                     continue
                 
                 # Display the student's name
                 student_name = response.json()["student_name"]
-                text_bbox = draw.textbbox((0, 0), student_name, font=font)
-                text_width, text_height = text_bbox[2], text_bbox[3]
-                x = (lcd.width - text_height) // 2
-                y = (lcd.height - text_width) // 2
-                text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-                text_draw = ImageDraw.Draw(text_image)
-                text_draw.text((0, 0), student_name, font=font, fill="WHITE")
-                rotated = text_image.rotate(90, expand=1)
-                image.paste(rotated, (x, y))
-                lcd.ShowImage(image)
-                
-                # Wait for 5 seconds
-                time.sleep(5)
+                print_message(student_name, "center", duration=5, font=font)
             else:
                 # Display an error message
                 error_message = "An error occurred\nPlease try again later"
-                text_bbox = draw.textbbox((0, 0), error_message, font=font)
-                text_width, text_height = text_bbox[2], text_bbox[3]
-                x = 10
-                y = (lcd.height - text_width) // 2
-                text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-                text_draw = ImageDraw.Draw(text_image)
-                text_draw.text((0, 0), error_message, font=font, fill="WHITE")
-                rotated = text_image.rotate(90, expand=1)
-                image.paste(rotated, (x, y))
-                lcd.ShowImage(image)
-                
-                # Wait for 5 seconds
-                time.sleep(5)
+                print_message(error_message, "center", duration=5, font=font)
            
-            
         user_input = None
 
         # Start a new input thread
