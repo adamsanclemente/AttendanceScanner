@@ -123,7 +123,7 @@ while True:
         text_width, text_height = text_bbox[2], text_bbox[3]
 
         y = (lcd.height - text_width) // 2  # This is actually the x-coordinate in landscape mode
-        x = 10# This is actually the y-coordinate in landscape mode
+        x = 10 # This is actually the y-coordinate in landscape mode
 
         # Rotate the text and draw it centered
         text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
@@ -138,31 +138,13 @@ while True:
         ready_width, ready_height = ready_bbox[2], ready_bbox[3]
         ready_y = (lcd.height - ready_width) // 2  # This is actually the x-coordinate in landscape mode
         ready_x = x + text_height + 30  # 10 pixels below the current time, this is actually the y-coordinate in landscape mode
-        
-        # Add the IP address below that
-        ip_address = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True).decode("utf-8").strip()
-        ip_text = f"IP Address: {ip_address}"
-        ip_bbox = draw.textbbox((0, 0), ip_text, font=smfont)
-        ip_width, ip_height = ip_bbox[2], ip_bbox[3]
-        ip_y = ready_x + ready_height + 10  # 10 pixels below the "Ready to Scan!" text
-        ip_x = x  # This is actually the y-coordinate in landscape mode
-        
-        
 
         # Rotate the text and draw it centered
         ready_image = Image.new('RGB', (ready_width, ready_height), 'BLACK')
         ready_draw = ImageDraw.Draw(ready_image)
         ready_draw.text((0, 0), ready_text, font=font, fill="WHITE")
-        ready_rotated = ready_image.rotate(90, expand=1)
-        image.paste(ready_rotated, (ready_x, ready_y))
-        
-        # Rotate the text and draw it centered
-        ip_image = Image.new('RGB', (ip_width, ip_height), 'BLACK')
-        ip_draw = ImageDraw.Draw(ip_image)
-        ip_draw.text((0, 0), ip_text, font=smfont, fill="WHITE")
-        ip_rotated = ip_image.rotate(90, expand=1)
-        image.paste(ip_rotated, (ip_x, ip_y))
-        
+        rotated_ready = ready_image.rotate(90, expand=1)
+        image.paste(rotated_ready, (ready_x, ready_y))
     else:
         # Display error message
         error_message = "No WiFi Connection\nCheck your network settings"
@@ -218,30 +200,30 @@ while True:
             student_name = "Balls"
             print_message(student_name, "center", duration=5, font=font)
 
-        # Handle Student ID Inputs
-        else:
-            # Make a request to the server
-            response = requests.post("https://attendance.adamsc.xyz/api/attendance", json={"student_id": user_input, "api_key": "123"})
+        # # Handle Student ID Inputs
+        # else:
+        #     # Make a request to the server
+        #     response = requests.post("https://attendance.adamsc.xyz/api/attendance", json={"student_id": user_input, "api_key": "123"})
             
-            # Check if the request was successful
-            if response.status_code == 200:
-                # Clear the display
-                lcd.clear()
+        #     # Check if the request was successful
+        #     if response.status_code == 200:
+        #         # Clear the display
+        #         lcd.clear()
                 
-                # Check type of response
-                if response.json()["status"] == "error":
-                    # Display an error message
-                    error_message = response.json()["message"]
-                    print_message(error_message, "center", duration=5, font=font)
-                    continue
+        #         # Check type of response
+        #         if response.json()["status"] == "error":
+        #             # Display an error message
+        #             error_message = response.json()["message"]
+        #             print_message(error_message, "center", duration=5, font=font)
+        #             continue
                 
-                # Display the student's name
-                student_name = response.json()["student_name"]
-                print_message(student_name, "center", duration=5, font=font)
-            else:
-                # Display an error message
-                error_message = "An error occurred\nPlease try again later"
-                print_message(error_message, "center", duration=5, font=font)
+        #         # Display the student's name
+        #         student_name = response.json()["student_name"]
+        #         print_message(student_name, "center", duration=5, font=font)
+        #     else:
+        #         # Display an error message
+        #         error_message = "An error occurred\nPlease try again later"
+        #         print_message(error_message, "center", duration=5, font=font)
            
         user_input = None
 
