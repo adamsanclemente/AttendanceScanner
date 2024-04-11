@@ -4,7 +4,6 @@
 import os
 import sys 
 import time
-import logging
 import subprocess
 import threading
 import spidev as SPI
@@ -100,7 +99,7 @@ input_thread.start()
 
 
 while True:
-    # Create a new image with white background
+    # Create a new image with black background
     image = Image.new("RGB", (lcd.width, lcd.height), "BLACK")
     draw = ImageDraw.Draw(image)
 
