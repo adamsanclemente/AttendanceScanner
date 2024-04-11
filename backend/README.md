@@ -9,4 +9,4 @@
   - Tmux
 - Configure Environment Variables
 - Set the startup script
-- Reboo
+- Reboot
