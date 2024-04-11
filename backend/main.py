@@ -138,13 +138,31 @@ while True:
         ready_width, ready_height = ready_bbox[2], ready_bbox[3]
         ready_y = (lcd.height - ready_width) // 2  # This is actually the x-coordinate in landscape mode
         ready_x = x + text_height + 30  # 10 pixels below the current time, this is actually the y-coordinate in landscape mode
+        
+        # Add the IP address below that
+        ip_address = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True).decode("utf-8").strip()
+        ip_text = f"IP Address: {ip_address}"
+        ip_bbox = draw.textbbox((0, 0), ip_text, font=smfont)
+        ip_width, ip_height = ip_bbox[2], ip_bbox[3]
+        ip_y = ready_x + ready_height + 10  # 10 pixels below the "Ready to Scan!" text
+        ip_x = x  # This is actually the y-coordinate in landscape mode
+        
+        
 
         # Rotate the text and draw it centered
         ready_image = Image.new('RGB', (ready_width, ready_height), 'BLACK')
         ready_draw = ImageDraw.Draw(ready_image)
         ready_draw.text((0, 0), ready_text, font=font, fill="WHITE")
-        rotated_ready = ready_image.rotate(90, expand=1)
-        image.paste(rotated_ready, (ready_x, ready_y))
+        ready_rotated = ready_image.rotate(90, expand=1)
+        image.paste(ready_rotated, (ready_x, ready_y))
+        
+        # Rotate the text and draw it centered
+        ip_image = Image.new('RGB', (ip_width, ip_height), 'BLACK')
+        ip_draw = ImageDraw.Draw(ip_image)
+        ip_draw.text((0, 0), ip_text, font=smfont, fill="WHITE")
+        ip_rotated = ip_image.rotate(90, expand=1)
+        image.paste(ip_rotated, (ip_x, ip_y))
+        
     else:
         # Display error message
         error_message = "No WiFi Connection\nCheck your network settings"
