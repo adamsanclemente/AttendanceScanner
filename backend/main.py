@@ -160,21 +160,21 @@ while True:
         rotated = text_image.rotate(90, expand=1)
         image.paste(rotated, (x, y))
     
-    # Check Server Connection // Disabled for DEV
-    # if not server_status:
-    #     error_message = "Server is offline\nPlease try again later"
-    #     text_bbox = draw.textbbox((0, 0), error_message, font=font)
-    #     text_width, text_height = text_bbox[2], text_bbox[3]
+    # Check Server Connection
+    if not server_status:
+        error_message = "Server is offline\nPlease try again later"
+        text_bbox = draw.textbbox((0, 0), error_message, font=font)
+        text_width, text_height = text_bbox[2], text_bbox[3]
 
-    #     x = 10
-    #     y = (lcd.height - text_width) // 2
+        x = 10
+        y = (lcd.height - text_width) // 2
 
-    #     # Rotate the text and draw it centered
-    #     text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-    #     text_draw = ImageDraw.Draw(text_image)
-    #     text_draw.text((0, 0), error_message, font=font, fill="WHITE")
-    #     rotated = text_image.rotate(90, expand=1)
-    #     image.paste(rotated, (x, y))
+        # Rotate the text and draw it centered
+        text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
+        text_draw = ImageDraw.Draw(text_image)
+        text_draw.text((0, 0), error_message, font=font, fill="WHITE")
+        rotated = text_image.rotate(90, expand=1)
+        image.paste(rotated, (x, y))
 
     # Display the image on the LCD
     lcd.ShowImage(image)
