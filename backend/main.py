@@ -202,7 +202,7 @@ while True:
         # # Handle Student ID Inputs
         # else:
         #     # Make a request to the server
-        #     response = requests.post("https://attendance.adamsc.xyz/api/attendance", json={"student_id": user_input, "api_key": "123"})
+        #     response = requests.post("https://attendance.adamsc.xyz/api/attendance", json={"studentId": user_input, "api_key": "123"})
             
         #     # Check if the request was successful
         #     if response.status_code == 200:
@@ -217,9 +217,9 @@ while True:
         #             continue
                 
         #         # Display the student's name
-        #         student_name = response.json()["student_name"]
+        #         student_name = response.json()["studentName"]
         #         print_message(student_name, "center", duration=5, font=font)
-        #     else:
+        #     else:w
         #         # Display an error message
         #         error_message = "An error occurred\nPlease try again later"
         #         print_message(error_message, "center", duration=5, font=font)
