@@ -7,6 +7,7 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { Loader2 } from 'lucide-svelte';
 	import { AlertCircle } from 'lucide-svelte';
+	import {APP_NAME} from '$lib/config/constants';
 
 	const signInSchema = userSchema.pick({
 		email: true,
@@ -18,7 +19,13 @@
 	export let form: SuperValidated<SignInSchema>;
 </script>
 
-<div class="flex items-center justify-center mx-auto max-w-2xl">
+<svelte:head>
+	<title>Sign In | {APP_NAME}</title>
+</svelte:head>
+
+
+<div class="flex items-center justify-center flex-col mx-auto max-w-2xl">
+	<h1 class="text-3xl font-bold py-5">{APP_NAME}</h1>
 	<Form.Root let:submitting let:errors method="POST" {form} schema={signInSchema} let:config>
 		<Card.Root>
 			<Card.Header class="space-y-1">

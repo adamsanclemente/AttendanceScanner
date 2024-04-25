@@ -22,6 +22,10 @@
 	form = data.form;
 </script>
 
+<svelte:head>
+	<title>Profile | Attendance Scanner</title>
+</svelte:head>
+
 <div class="flex items-center justify-center mx-auto max-w-2xl">
 	<Form.Root let:submitting let:errors method="POST" {form} schema={profileSchema} let:config>
 		<Card.Root>

@@ -199,30 +199,30 @@ while True:
             student_name = "Balls"
             print_message(student_name, "center", duration=5, font=font)
 
-        # # Handle Student ID Inputs
-        # else:
-        #     # Make a request to the server
-        #     response = requests.post("https://attendance.adamsc.xyz/api/attendance", json={"studentId": user_input, "api_key": "123"})
+        # Handle Student ID Inputs
+        else:
+        # Make a request to the server
+            response = requests.post("https://attendance.adamsc.xyz/api/record", json={"studentId": user_input, "apiKey": "123", "classId": "123", "deviceId": "123"})
             
-        #     # Check if the request was successful
-        #     if response.status_code == 200:
-        #         # Clear the display
-        #         lcd.clear()
+            # Check if the request was successful
+            if response.status_code == 200:
+                # Clear the display
+                lcd.clear()
                 
-        #         # Check type of response
-        #         if response.json()["status"] == "error":
-        #             # Display an error message
-        #             error_message = response.json()["message"]
-        #             print_message(error_message, "center", duration=5, font=font)
-        #             continue
+                 # Check type of response
+                if response.json()["status"] == "error":
+                     # Display an error message
+                    error_message = response.json()["message"]
+                    print_message(error_message, "center", duration=5, font=font)
+                    continue
                 
-        #         # Display the student's name
-        #         student_name = response.json()["studentName"]
-        #         print_message(student_name, "center", duration=5, font=font)
-        #     else:w
-        #         # Display an error message
-        #         error_message = "An error occurred\nPlease try again later"
-        #         print_message(error_message, "center", duration=5, font=font)
+                # Display the student's name
+                student_name = response.json()["studentName"]
+                print_message(student_name, "center", duration=5, font=font)
+            else:
+                # Display an error message
+                error_message = "An error occurred\nPlease try again later"
+                print_message(error_message, "center", duration=5, font=font)
            
         user_input = None
 

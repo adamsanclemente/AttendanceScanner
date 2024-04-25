@@ -1,6 +1,6 @@
 {
-  "id": "1783d27f-3018-4fe1-9830-095a5616df34",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "2228d1d6-e0b7-4ca5-adb0-68eafe55f7f3",
+  "prevId": "1783d27f-3018-4fe1-9830-095a5616df34",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -10,15 +10,36 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "enable_email": {
+          "name": "enable_email",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "email_time": {
+          "name": "email_time",
+          "type": "time with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'07:30:00-05:00'"
         },
         "created_at": {
           "name": "created_at",
@@ -31,7 +52,8 @@
           "name": "updated_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "school_id": {
           "name": "school_id",
@@ -65,9 +87,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "student_id": {
           "name": "student_id",
@@ -139,15 +162,23 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
         },
         "created_at": {
           "name": "created_at",
@@ -255,7 +286,8 @@
           "name": "updated_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "school_id": {
           "name": "school_id",

@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 export const BASE_URL = dev ? 'http://localhost:5173' : 'attendance.adamsc.xyz';
-export const APP_NAME = 'SVTHS Attendance Scanner';
+export const APP_NAME = 'Attendance Scanner';
 export const CONTACT_EMAIL = 'abombsc@gmail.com';
 export const DOMAIN = 'attendance.adamsc.xyz';
 /* WARNING!!! TERMS AND CONDITIONS AND PRIVACY POLICY 

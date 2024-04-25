@@ -38,16 +38,13 @@
 				><Logo size="24"></Logo><span class="inline-block font-bold">{APP_NAME}</span></a
 			>
 			<nav class="flex gap-6">
-				<a
-					class="flex items-center text-sm font-medium text-muted-foreground"
-					href="/"
-					class:active={'/' === currentPage}>Home</a
-				>
+				{#if user}
 				<a
 					class="flex items-center text-sm font-medium text-muted-foreground"
 					href="/dashboard"
 					class:active={'/dashboard' === currentPage}>Dashboard</a
 				>
+				{/if}
 			</nav>
 		</div>
 		<div class="flex flex-1 items-center justify-end space-x-4">
