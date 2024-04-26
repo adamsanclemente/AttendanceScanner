@@ -56,9 +56,9 @@ export const POST: RequestHandler = async ({ url }) => {
         where: (record) => eq(record.classId, classid) && eq(record.studentId, studentId) && gte(record.timestamp, start) && lte(record.timestamp, end),
     });
 
-    console.log(record);
+    
 
-    if (record) {
+    if (record && record.id === studentId) {
         return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
     }
 
@@ -70,6 +70,8 @@ export const POST: RequestHandler = async ({ url }) => {
     if (today > emailDate) {
         status = 'TARDY';
     }
+
+    console.log(emailDate, today, status)
 
     // Create the record
     const newRecord = await db.insert(recordTable).values({
