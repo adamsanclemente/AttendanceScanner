@@ -205,7 +205,7 @@ while True:
         # Handle Student ID Inputs
         else:
         # Make a request to the server
-            response = requests.post("https://attendance.adamsc.xyz/api/record", json={"studentId": user_input, "apiKey": "totallysecurekey", "classId": "109fe9a0-0493-4682-8f9a-02909b79e28e"})
+            response = requests.post(f"https://attendance.adamsc.xyz/api/record?studentId={user_input}&apiKey=totallysecurekey&classId=109fe9a0-0493-4682-8f9a-02909b79e28e")
             
             # Check if the request was successful
             if response.status_code == 200:
