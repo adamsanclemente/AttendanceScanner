@@ -105,13 +105,6 @@ while True:
 
     # Check if WiFi is connected
     wifi_status = subprocess.call("ping -c 1 google.com > /dev/null 2>&1", shell=True) == 0
-    
-    # Check if Server is online from custom API
-    try:
-        response = requests.get("https://attendance.adamsc.xyz/api/status")
-        server_status = response.status_code == 200
-    except requests.exceptions.RequestException:
-        server_status = False
 
     if wifi_status:
         # Get the current time in 12-hour format
@@ -161,20 +154,6 @@ while True:
         image.paste(rotated, (x, y))
     
     # Check Server Connection
-    if not server_status:
-        error_message = "Server is offline\nPlease try again later"
-        text_bbox = draw.textbbox((0, 0), error_message, font=font)
-        text_width, text_height = text_bbox[2], text_bbox[3]
-
-        x = 10
-        y = (lcd.height - text_width) // 2
-
-        # Rotate the text and draw it centered
-        text_image = Image.new('RGB', (text_width, text_height), 'BLACK')
-        text_draw = ImageDraw.Draw(text_image)
-        text_draw.text((0, 0), error_message, font=font, fill="WHITE")
-        rotated = text_image.rotate(90, expand=1)
-        image.paste(rotated, (x, y))
 
     # Display the image on the LCD
     lcd.ShowImage(image)
