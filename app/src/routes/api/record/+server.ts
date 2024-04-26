@@ -62,7 +62,10 @@ export const POST: RequestHandler = async ({ url }) => {
 
 
     if (record && record.id === studentId && (record.timestamp >= start && record.timestamp <= end)) {
+        return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
+    }
 
+    if (record) {
         // Double check to see if there isn't a record for the student today
         const recordDate = new Date(record.timestamp);
 
@@ -73,8 +76,6 @@ export const POST: RequestHandler = async ({ url }) => {
         if (recordDateOnly.getTime() === todayDateOnly.getTime()) {
             return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
         }
-
-        return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
     }
 
 
