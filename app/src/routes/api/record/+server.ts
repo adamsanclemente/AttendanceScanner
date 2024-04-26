@@ -49,6 +49,9 @@ export const POST: RequestHandler = async ({ url }) => {
 
     // Check to see if the student already has a record for today
     const today = new Date();
+    // Convert today to UTC
+    today.setHours(today.getHours() - 4);
+    
     const start = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
     const end = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
 
@@ -67,7 +70,7 @@ export const POST: RequestHandler = async ({ url }) => {
     const emailHour = Number(emailTime[0]);
     const adjustedEmailHour = emailHour < 12 ? emailHour + 12 : emailHour;
     const emailDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), adjustedEmailHour, Number(emailTime[1]), 0);
-    
+
     let status: "PRESENT" | "TARDY" = 'PRESENT';
     if (today > emailDate) {
         status = 'TARDY';
