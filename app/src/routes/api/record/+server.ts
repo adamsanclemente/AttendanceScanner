@@ -124,6 +124,7 @@ export const POST: RequestHandler = async ({ url }) => {
     if (!newRecord) {
         return new Response((JSON.stringify({ status: 'error', message: 'Error Creating Record' })), { status: 500 });
     } else {
-        return new Response((JSON.stringify({ status: 'success', studentName: `${student.firstName} ${student.lastName}` })), { status: 200 });
+        console.info(`Record created for ${student.firstName} ${student.lastName} in class ${c.name} - ${status}`);
+        return new Response((JSON.stringify({ status: 'success', studentName: `${student.firstName} ${student.lastName}`, recordstatus: status })), { status: 200 });
     }
 };
