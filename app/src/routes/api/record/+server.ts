@@ -43,7 +43,7 @@ export const POST: RequestHandler = async ({ url }) => {
         where: (studentToClass) => eq(studentToClass.classId, classid) && eq(studentToClass.studentId, studentId),
     });
 
-    if(!studentInClass) {
+    if (!studentInClass) {
         return new Response((JSON.stringify({ status: 'error', message: 'Student Not In Class' })), { status: 404 });
     }
 
@@ -56,16 +56,18 @@ export const POST: RequestHandler = async ({ url }) => {
         where: (record) => eq(record.classId, classid) && eq(record.studentId, studentId) && gte(record.timestamp, start) && lte(record.timestamp, end),
     });
 
-    
 
-    if (record && record.id === studentId) {
+
+    if (record && record.id === studentId && (record.timestamp >= start && record.timestamp <= end)) {
         return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
     }
 
     // Determine if the student is late based on c.emailtime
     const emailTime = c.emailTime.split(':');
-    const emailDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), Number(emailTime[0]), Number(emailTime[1]), 0);
-
+    const emailHour = Number(emailTime[0]);
+    const adjustedEmailHour = emailHour < 12 ? emailHour + 12 : emailHour;
+    const emailDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), adjustedEmailHour, Number(emailTime[1]), 0);
+    
     let status: "PRESENT" | "TARDY" = 'PRESENT';
     if (today > emailDate) {
         status = 'TARDY';
@@ -85,6 +87,6 @@ export const POST: RequestHandler = async ({ url }) => {
     if (!newRecord) {
         return new Response((JSON.stringify({ status: 'error', message: 'Error Creating Record' })), { status: 500 });
     } else {
-        return new Response((JSON.stringify({ status: 'success', studentName: `${student.firstName} ${student.lastName}`})), { status: 200 });
+        return new Response((JSON.stringify({ status: 'success', studentName: `${student.firstName} ${student.lastName}` })), { status: 200 });
     }
 };
