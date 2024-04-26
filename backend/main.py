@@ -191,6 +191,9 @@ while True:
             subprocess.call("sudo reboot", shell=True)
         elif user_input == 'show_ip':
             handle_ip_display()
+        elif user_input == 'exit':
+            lcd.clear()
+            break
         elif user_input == 'X0034LPXZP':
             # Clear the display
             lcd.clear()
