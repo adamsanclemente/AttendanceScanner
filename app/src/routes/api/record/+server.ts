@@ -65,8 +65,13 @@ export const POST: RequestHandler = async ({ url }) => {
         return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
     }
 
-    if (record && record.id === studentId) {
-        // Double check to see if there isn't a record for the student today
+    // Find all record for the student
+    const allRecords = await db.query.recordTable.findMany({
+        where: eq(recordTable.studentId, studentId),
+    });
+
+    // Loop through all the records and check if the student has a record for today
+    for (const record of allRecords) {
         const recordDate = new Date(record.timestamp);
 
         // Extract only the date from the timestamp
@@ -80,7 +85,20 @@ export const POST: RequestHandler = async ({ url }) => {
 
 
 
+    if (record && record.id === studentId) {
+        // Double check to see if there isn't a record for the student today
+        const recordDate = new Date(record.timestamp);
 
+        // Extract only the date from the timestamp
+        const recordDateOnly = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
+        const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        if (recordDateOnly.getTime() === todayDateOnly.getTime()) {
+            return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
+        }
+    }
+
+    
     // Determine if the student is late based on c.emailtime
     const emailTime = c.emailTime.split(':');
     const emailHour = Number(emailTime[0]);
