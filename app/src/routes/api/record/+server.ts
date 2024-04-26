@@ -65,7 +65,7 @@ export const POST: RequestHandler = async ({ url }) => {
         return new Response((JSON.stringify({ status: 'error', message: 'Record Already Exists For Today' })), { status: 400 });
     }
 
-    if (record) {
+    if (record && record.id === studentId) {
         // Double check to see if there isn't a record for the student today
         const recordDate = new Date(record.timestamp);
 
