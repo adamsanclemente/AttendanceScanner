@@ -340,7 +340,7 @@
                 </Table.Header>
                 <Table.Body class="max-h-[600px] overflow-y-auto">
                     {#each students as s}
-                        <Table.Row class="h-96 overflow-y-auto">
+                        <Table.Row>
                             <Table.Cell>{s.student.firstName + ' ' + s.student.lastName}</Table.Cell>
                             <Table.Cell>
                                 <Button
@@ -372,7 +372,7 @@
                         <Dialog.Title>Add Students</Dialog.Title>
                         <Dialog.Description>Select students to add to the class</Dialog.Description>
                     </Dialog.Header>
-                    <Form.Root let:submitting let:errors method="POST" form={formAddStudents} action="?/updateStudents" schema={updateStudentsToClassSchema}>
+                    <Form.Root let:submitting let:errors method="POST" form={formAddStudents} action="?/updateStudents" schema={updateStudentsToClassSchema} class="overflow-y-scroll">
                         <div class="grid gap-4 py-4">
                             {#if errors?._errors?.length}
                                 <Alert.Root variant="destructive">
