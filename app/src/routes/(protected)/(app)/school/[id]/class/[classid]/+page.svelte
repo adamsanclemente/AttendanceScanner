@@ -144,7 +144,7 @@
                                 </Form.Field>
 
                                 <!-- users -->
-                                <Table.Root>
+                                <Table.Root class="h-96 overflow-y-auto">
                                     <Table.Header>
                                         <Table.Row>
                                             <Table.Head>User</Table.Head>
@@ -340,7 +340,7 @@
                 </Table.Header>
                 <Table.Body class="max-h-[600px] overflow-y-auto">
                     {#each students as s}
-                        <Table.Row>
+                        <Table.Row class="h-96 overflow-y-auto">
                             <Table.Cell>{s.student.firstName + ' ' + s.student.lastName}</Table.Cell>
                             <Table.Cell>
                                 <Button
