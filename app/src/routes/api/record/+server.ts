@@ -31,15 +31,15 @@ export const POST: RequestHandler = async ({ url }) => {
 
     if(classId === 'anyclass') {
         // find the class the student is in
-        const studentToClass = await db.query.studentToClass.findFirst({
+        const studentToClass2 = await db.query.studentToClass.findFirst({
             where: eq(studentToClass.studentId, studentId),
         });
 
-        if (!studentToClass) {
+        if (!studentToClass2) {
             return new Response((JSON.stringify({ status: 'error', message: 'Student Not In Any Class' })), { status: 404 });
         }
 
-        classId = studentToClass.classId;
+        classId = studentToClass2.classId;
     }
 
     // Get the class
