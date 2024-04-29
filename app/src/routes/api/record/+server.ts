@@ -2,16 +2,16 @@
 import type { RequestHandler } from './$types';
 import db from '$lib/server/database/drizzle';
 import { eq, gte, lte } from 'drizzle-orm';
-import { classTable, recordTable, studentTable } from '$lib/server/database/drizzle-schemas';
+import { classTable, recordTable, studentTable, studentToClass } from '$lib/server/database/drizzle-schemas';
 
 export const POST: RequestHandler = async ({ url }) => {
     // Get the school and class id from the params
-    const classid = url.searchParams.get('classId');
+    let classId = url.searchParams.get('classId');
     const studentId = url.searchParams.get('studentId');
     const apikey = url.searchParams.get('apikey');
 
     // Check all inputs are present
-    if (!classid || !studentId || !apikey) {
+    if (!classId || !studentId || !apikey) {
         return new Response((JSON.stringify({ status: 'error', message: 'Missing Parameters' })), { status: 400 });
     }
 
@@ -29,9 +29,22 @@ export const POST: RequestHandler = async ({ url }) => {
         return new Response((JSON.stringify({ status: 'error', message: 'Student Not Found' })), { status: 404 });
     }
 
+    if(classId === 'anyclass') {
+        // find the class the student is in
+        const studentToClass = await db.query.studentToClass.findFirst({
+            where: eq(studentToClass.studentId, studentId),
+        });
+
+        if (!studentToClass) {
+            return new Response((JSON.stringify({ status: 'error', message: 'Student Not In Any Class' })), { status: 404 });
+        }
+
+        classId = studentToClass.classId;
+    }
+
     // Get the class
     const c = await db.query.classTable.findFirst({
-        where: eq(classTable.id, classid),
+        where: eq(classTable.id, classId),
     });
 
     if (!c) {
@@ -40,7 +53,7 @@ export const POST: RequestHandler = async ({ url }) => {
 
     // Check to see if the is in the class
     const studentInClass = await db.query.studentToClass.findFirst({
-        where: (studentToClass) => eq(studentToClass.classId, classid) && eq(studentToClass.studentId, studentId),
+        where: (studentToClass) => eq(studentToClass.classId, classId) && eq(studentToClass.studentId, studentId),
     });
 
     if (!studentInClass) {
@@ -56,7 +69,7 @@ export const POST: RequestHandler = async ({ url }) => {
     const end = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59);
 
     const record = await db.query.recordTable.findFirst({
-        where: (record) => eq(record.classId, classid) && eq(record.studentId, studentId) && gte(record.timestamp, start) && lte(record.timestamp, end),
+        where: (record) => eq(record.classId, classId) && eq(record.studentId, studentId) && gte(record.timestamp, start) && lte(record.timestamp, end),
     });
 
 
@@ -115,7 +128,7 @@ export const POST: RequestHandler = async ({ url }) => {
     // Create the record
     const newRecord = await db.insert(recordTable).values({
         studentId: studentId,
-        classId: classid,
+        classId: classId,
         status: status,
         reason: '',
         timestamp: new Date(),
