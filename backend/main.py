@@ -11,6 +11,19 @@ sys.path.append("..")
 from lib import LCD_1inch47
 from PIL import Image,ImageDraw,ImageFont
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Configuration from environment variables
+API_BASE_URL = os.getenv('API_BASE_URL', 'https://attendance.adamsc.xyz')
+API_KEY = os.getenv('API_KEY', '')
+DEFAULT_CLASS_ID = os.getenv('DEFAULT_CLASS_ID', 'anyclass')
+
+if not API_KEY:
+    print("ERROR: API_KEY environment variable is required!")
+    sys.exit(1)
 
 # Raspberry Pi pin configuration
 RST = 27
@@ -70,7 +83,15 @@ def print_message(message, position, duration=5, font=font):
 # Default Command Handler
 def handle_input():
     global user_input
-    user_input = input("Enter Command or Student ID: ")
+    try:
+        user_input = input("Enter Command or Student ID: ")
+    except KeyboardInterrupt:
+        print("\nShutting down scanner...")
+        lcd.clear()
+        sys.exit(0)
+    except Exception as e:
+        print(f"Input error: {e}")
+        user_input = None
 
 # Wifi Configuration Handler
 def handle_wifi_input():
@@ -177,33 +198,60 @@ while True:
             # Clear the display
             lcd.clear()
             
-            # Display the student's name
-            student_name = "Balls"
-            print_message(student_name, "center", duration=5, font=font)
+            # Display test scan message
+            test_message = "Test Scan Successful"
+            print_message(test_message, "center", duration=5, font=font)
 
         # Handle Student ID Inputs
         else:
-        # Make a request to the server
-            response = requests.post(f"https://attendance.adamsc.xyz/api/record?studentId={user_input}&apikey=totallysecurekey&classId=anyclass")
-            
-            # Check if the request was successful
-            if response.status_code == 200:
-                # Clear the display
-                lcd.clear()
+            try:
+                # Make a request to the server
+                print(f"Recording attendance for ID: {user_input}")
+                response = requests.post(
+                    f"{API_BASE_URL}/api/record?studentId={user_input}&apikey={API_KEY}&classId={DEFAULT_CLASS_ID}",
+                    timeout=10
+                )
                 
-                 # Check type of response
-                if response.json()["status"] == "error":
-                     # Display an error message
-                    error_message = response.json()["message"]
+                # Check if the request was successful
+                if response.status_code == 200:
+                    # Clear the display
+                    lcd.clear()
+                    
+                    # Check type of response
+                    response_data = response.json()
+                    if response_data["status"] == "error":
+                        # Display an error message
+                        error_message = response_data["message"]
+                        print(f"Server error: {error_message}")
+                        print_message(error_message, "center", duration=5, font=font)
+                        continue
+                    
+                    # Display the student's name
+                    student_name = response_data["studentName"]
+                    record_status = response_data.get("recordstatus", "PRESENT")
+                    print(f"Success: {student_name} - {record_status}")
+                    print_message(f"{student_name}\n{record_status}", "center", duration=5, font=font)
+                else:
+                    # Display an error message
+                    error_message = f"Server Error ({response.status_code})\nPlease try again"
+                    print(f"HTTP Error {response.status_code}: {response.text}")
                     print_message(error_message, "center", duration=5, font=font)
-                    continue
-                
-                # Display the student's name
-                student_name = response.json()["studentName"]
-                print_message(student_name, "center", duration=5, font=font)
-            else:
-                # Display an error message
-                error_message = "An error occurred\nPlease try again later"
+                    
+            except requests.exceptions.Timeout:
+                error_message = "Request Timeout\nCheck connection"
+                print("Request timeout - check network connection")
+                print_message(error_message, "center", duration=5, font=font)
+            except requests.exceptions.ConnectionError:
+                error_message = "Connection Error\nCheck network"
+                print("Connection error - check network and server")
+                print_message(error_message, "center", duration=5, font=font)
+            except requests.exceptions.RequestException as e:
+                error_message = "Network Error\nPlease try again"
+                print(f"Network error: {e}")
+                print_message(error_message, "center", duration=5, font=font)
+            except Exception as e:
+                error_message = "Unexpected Error\nCheck logs"
+                print(f"Unexpected error: {e}")
                 print_message(error_message, "center", duration=5, font=font)
            
         user_input = None

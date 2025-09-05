@@ -3,6 +3,7 @@ import type { RequestHandler } from './$types';
 import db from '$lib/server/database/drizzle';
 import { eq, gte, lte } from 'drizzle-orm';
 import { classTable, recordTable, studentTable, studentToClass } from '$lib/server/database/drizzle-schemas';
+import { SCANNER_API_KEY } from '$env/static/private';
 
 export const POST: RequestHandler = async ({ url }) => {
     // Get the school and class id from the params
@@ -16,7 +17,7 @@ export const POST: RequestHandler = async ({ url }) => {
     }
 
     // Check the api key
-    if (apikey !== 'totallysecurekey') {
+    if (!SCANNER_API_KEY || apikey !== SCANNER_API_KEY) {
         return new Response((JSON.stringify({ status: 'error', message: 'Invalid API Key' })), { status: 403 });
     }
 
